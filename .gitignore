@@ -1,11 +1,19 @@
-# Ignore local Python environment
+# Python + Streamlit
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.spec
+*.db
+*.DS_Store
+
+# Firebase private key (VERY IMPORTANT)
+firebase_key.json
+
+# Build outputs
 build/
 dist/
+*.spec
 *.exe
-env/
-venv/
+
+# Streamlit logs/state
+.streamlit/
