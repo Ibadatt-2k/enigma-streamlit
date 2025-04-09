@@ -4,14 +4,14 @@ from enigma.reflector import Reflector
 from enigma.plugboard import Plugboard
 from enigma.machine import EnigmaMachine
 
-import json
-from firebase_admin import credentials
 
-firebase_key = st.secrets["FIREBASE"]
-cred = credentials.Certificate(dict(st.secrets["FIREBASE"]))
-firebase_admin.initialize_app(cred)
+import firebase_admin
+from firebase_admin import credentials, firestore
 
-
+# Safe Firebase initialization (prevents reinitialization error)
+if not firebase_admin._apps:
+    cred = credentials.Certificate("firebase_key.json")
+    firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
@@ -127,7 +127,7 @@ inbox_owner = st.text_input("Enter your username to check messages:", key="inbox
 
 if inbox_owner:
     try:
-        messages = db.collection("messages").where("to", "==", inbox_owner).stream()
+        messages = db.collection("messages").where("to", "==", inbox_owner).order_by("timestamp").stream()
         inbox_display = ""
 
         for msg in messages:
