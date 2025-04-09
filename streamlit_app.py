@@ -8,7 +8,7 @@ import json
 from firebase_admin import credentials
 
 firebase_key = st.secrets["FIREBASE"]
-cred = credentials.Certificate(json.loads(json.dumps(firebase_key)))
+cred = credentials.Certificate(dict(st.secrets["FIREBASE"]))
 firebase_admin.initialize_app(cred)
 
 
