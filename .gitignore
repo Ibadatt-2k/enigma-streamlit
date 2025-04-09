@@ -1,0 +1,11 @@
+# Ignore local Python environment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.spec
+build/
+dist/
+*.exe
+env/
+venv/
