@@ -4,14 +4,14 @@ from enigma.reflector import Reflector
 from enigma.plugboard import Plugboard
 from enigma.machine import EnigmaMachine
 
+import json
+from firebase_admin import credentials
 
-import firebase_admin
-from firebase_admin import credentials, firestore
+firebase_key = st.secrets["FIREBASE"]
+cred = credentials.Certificate(json.loads(json.dumps(firebase_key)))
+firebase_admin.initialize_app(cred)
 
-# Safe Firebase initialization (prevents reinitialization error)
-if not firebase_admin._apps:
-    cred = credentials.Certificate("firebase_key.json")
-    firebase_admin.initialize_app(cred)
+
 
 db = firestore.client()
 
